@@ -21,5 +21,3 @@ for more options.
 #define STATIC_LAYERSET 7
 #define STRING_DELAY 20
 
-#define CLIP_BLOCK_X 8
-#define CLIP_BLOCK_Y 4

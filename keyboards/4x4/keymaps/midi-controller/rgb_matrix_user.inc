@@ -1,19 +1,13 @@
-// !!! DO NOT ADD #pragma once !!! //
-
-// Step 1.
-// Declare custom effects using the RGB_MATRIX_EFFECT macro
-// (note the lack of semicolon after the macro!)
 RGB_MATRIX_EFFECT(midi_feedback_effect)
 
-// Step 2.
-// Define effects inside the `RGB_MATRIX_CUSTOM_EFFECT_IMPLS` ifdef block
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-const int CLIP_BLOCK_INITIAL_KEY = MI_C;
+#include "midi-feedback.h"
+
 const int TRACK_ARM_INITIAL_KEY = MI_Gs_2;
 const int TRACK_STOP_INITIAL_KEY = MI_E_3;
 const int SCENE_INITIAL_KEY = MI_Gs_5;
-extern char indicators[];
+
 extern led_config_t g_led_config;
 
 #ifdef CONSOLE_ENABLED
@@ -22,13 +16,12 @@ uint16_t debug_counter = 0;
 uint16_t debugColor = 0;
 #endif
 
-extern const uint8_t ableton_colors[];
-
-// e.g: A simple effect, self-contained within a single method
+/* Use MIDI controller feedback notes sent to the keyboard to set the color of each button */
 static bool midi_feedback_effect(effect_params_t* params) 
 {
 	RGB_MATRIX_USE_LIMITS(led_min, led_max);  
-	uint8_t layer = get_highest_layer(layer_state|default_layer_state);
+	
+	uint8_t layer = get_highest_layer(layer_state | default_layer_state);
 
 	#ifdef CONSOLE_ENABLED
 	if (0 == debug_counter && timer_elapsed(debug_timer) > 10000)
@@ -57,17 +50,18 @@ static bool midi_feedback_effect(effect_params_t* params)
 				uint16_t key = keymap_key_to_keycode(layer, (keypos_t){col,row});
 				if (key >= CLIP_BLOCK_INITIAL_KEY && key < CLIP_BLOCK_INITIAL_KEY + CLIP_BLOCK_X * CLIP_BLOCK_Y)
 				{
+					/* Key is mapped to a MIDI note with feedback*/
 					light = indicators[key - CLIP_BLOCK_INITIAL_KEY];
 				}
 				else if (key >= TRACK_ARM_INITIAL_KEY && key < TRACK_ARM_INITIAL_KEY + CLIP_BLOCK_X)
 				{
 					// TODO use skinning from Ableton instead of hardcoding?
 					// TODO constants for colors
-					light = 6;	// arm - red
+					light = 6;	// arm track - red
 				}
 				else if (key >= TRACK_STOP_INITIAL_KEY && key < TRACK_STOP_INITIAL_KEY + CLIP_BLOCK_X)
 				{
-					light = 118;	// stop - gray
+					light = 118;	// stop track - gray
 				}
 				else if (KC_SPACE == key)
 				{
