@@ -4,10 +4,11 @@ import Live
 from _Framework.ControlSurface import ControlSurface
 from _Framework.InputControlElement import *
 from _Framework.SliderElement import SliderElement
-from _Framework.ButtonElement import ButtonElement
+from _Framework.ButtonElement import ButtonElement, Color
 from _Framework.ButtonMatrixElement import ButtonMatrixElement
 from _Framework.ChannelStripComponent import ChannelStripComponent
 from _Framework.DeviceComponent import DeviceComponent
+from _Framework.Dependency import inject, depends
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
 from _Framework.SessionZoomingComponent import SessionZoomingComponent
 from .SpecialMixerComponent import SpecialMixerComponent
@@ -17,7 +18,7 @@ from .SpecialZoomingComponent import SpecialZoomingComponent
 from .SpecialViewControllerComponent import DetailViewControllerComponent
 from .MIDI_Map import *
 from .colors import CLIP_COLOR_TABLE, RGB_COLOR_TABLE
-
+from .SkinDefault import make_default_skin
 
 # MIDI_NOTE_TYPE = 0
 # MIDI_CC_TYPE = 1
@@ -42,12 +43,14 @@ class FourByFour(ControlSurface):   # Make sure you update the name
         # self.set_suppress_rebuild_requests(True)
         with self.component_guard():
             self._note_map = []
-            self._ctrl_map = []
-            self._load_MIDI_map()
+            self._ctrl_map = []            
             self._session = None
             self._session_zoom = None
             self._mixer = None
-            self._setup_session_control()
+            self._skin = make_default_skin()
+            with inject(skin=(const(self._skin))).everywhere():
+                self._load_MIDI_map()
+                self._setup_session_control()
             self._setup_mixer_control()
             self._session.set_mixer(self._mixer)
             self._setup_device_and_transport_control()
@@ -87,7 +90,7 @@ class FourByFour(ControlSurface):   # Make sure you update the name
 
     def _setup_session_control(self):
         is_momentary = True
-        self._session = SpecialSessionComponent(TSB_X, TSB_Y)   # Track selection box size (X,Y) (horizontal, vertical).
+        self._session = SpecialSessionComponent(TSB_X, TSB_Y, enable_skinning=True)   # Track selection box size (X,Y) (horizontal, vertical).
         self._session.name = 'Session_Control'
         self._session.set_track_bank_buttons(self._note_map[SESSIONRIGHT], self._note_map[SESSIONLEFT])
         self._session.set_scene_bank_buttons(self._note_map[SESSIONDOWN], self._note_map[SESSIONUP])
@@ -208,10 +211,11 @@ class FourByFour(ControlSurface):   # Make sure you update the name
                     self._pads.append(pad)
             self.set_pad_translations(tuple(self._pads))
 
-    def _load_MIDI_map(self):
+    @depends(skin=None)
+    def _load_MIDI_map(self, skin=None):
         is_momentary = True
         for note in range(128):
-            button = ButtonElement(is_momentary, MESSAGETYPE, BUTTONCHANNEL, note)
+            button = ButtonElement(is_momentary, MESSAGETYPE, BUTTONCHANNEL, note, skin=skin)
             button.name = 'Note_' + str(note)
             self._note_map.append(button)
         self._note_map.append(None)     # add None to the end of the list, selectable with [-1]

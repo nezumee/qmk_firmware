@@ -5,12 +5,57 @@
 # Embedded file name: output/Live/mac_64_static/Release/python-bundle/MIDI Remote Scripts/novation/colors.py
 # Compiled at: 2022-01-27 16:28:17
 # Size of source mod 2**32: 5501 bytes
+from _Framework.ButtonElement import Color
 
-from builtins import object
-#from ableton.v2.control_surface.elements import AnimatedColor, Color
 BLINK_CHANNEL = 1
 PULSE_CHANNEL = 2
 
+class Rgb:
+    BLACK = Color(0)
+    BLACK = Color(0)
+    DARK_GREY = Color(1)
+    GREY = Color(2)
+    WHITE = Color(3)
+    WHITE_HALF = Color(1)
+    RED = Color(5)
+    RED_BLINK = RED # TODO implement animations
+    RED_PULSE = RED
+    RED_HALF = Color(7)
+    OFF_WHITE = Color(8)
+    ORANGE = Color(9)
+    ORANGE_HALF = Color(11)
+    CREAM = Color(12)
+    AMBER = Color(96)
+    AMBER_HALF = Color(14)
+    DARK_YELLOW = Color(17)
+    DARK_YELLOW_HALF = Color(19)
+    GREEN = Color(21)
+    GREEN_BLINK = GREEN
+    GREEN_PULSE = GREEN
+    GREEN_HALF = Color(27)
+    MINT = Color(29)
+    MINT_HALF = Color(31)
+    LIGHT_BLUE = Color(37)
+    LIGHT_BLUE_HALF = Color(39)
+    BLUE = Color(41)
+    BLUE_PULSE = BLUE
+    BLUE_HALF = Color(43)
+    DARK_BLUE = Color(49)
+    DARK_BLUE_HALF = Color(51)
+    VIOLET = Color(52)
+    PURPLE = Color(53)
+    PURPLE_HALF = Color(55)
+    AQUA = Color(77)
+    DARK_ORANGE = Color(84)
+    PALE_GREEN = Color(87)
+    PALE_GREEN_HALF = Color(89)
+    YELLOW = Color(97)
+    YELLOW_HALF = Color(125) 
+
+class Mono:
+    OFF = Color(0)
+    HALF = Color(63)
+    ON = Color(127) 
 
 CLIP_COLOR_TABLE = {10927616:74, 
  16149507:84, 

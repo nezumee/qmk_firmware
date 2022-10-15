@@ -8,8 +8,8 @@ class SpecialSessionComponent(SessionComponent):
     " Special SessionComponent for APC combination mode and button to fire selected clip slot "
     __module__ = __name__
 
-    def __init__(self, num_tracks, num_scenes):
-        SessionComponent.__init__(self, num_tracks, num_scenes)
+    def __init__(self, num_tracks, num_scenes, enable_skinning=False):
+        SessionComponent.__init__(self, num_tracks, num_scenes, enable_skinning=enable_skinning)
         self._slot_launch_button = None
 
     def disconnect(self):
