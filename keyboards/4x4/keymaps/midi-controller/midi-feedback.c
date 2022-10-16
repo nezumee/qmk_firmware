@@ -3,11 +3,11 @@
 #include "midi-feedback.h"
 
 /* Stores the last velocity of each note sent to the keyboard. */
-char indicators[CLIP_BLOCK_X * CLIP_BLOCK_Y];
+char indicators[CLIP_BLOCK_SIZE];
 
 void midi_noteon_callback(MidiDevice *device, uint8_t byte0, uint8_t byte1, uint8_t byte2)
 {
-	if (byte1 >= CLIP_BLOCK_INITIAL_NOTE && byte1 < CLIP_BLOCK_INITIAL_NOTE + CLIP_BLOCK_X * CLIP_BLOCK_Y)
+	if (byte1 >= CLIP_BLOCK_INITIAL_NOTE && byte1 < CLIP_BLOCK_INITIAL_NOTE + CLIP_BLOCK_SIZE)
 	{
 		indicators[byte1 - CLIP_BLOCK_INITIAL_NOTE] = byte2;
 		dprintf("MIDI indicator %u velocity %u. Set index %u\n", byte1, byte2, byte1 - CLIP_BLOCK_INITIAL_NOTE);
@@ -17,7 +17,7 @@ void midi_noteon_callback(MidiDevice *device, uint8_t byte0, uint8_t byte1, uint
 /* It seems this is not actually called, noteon with velocity 0 is used instead. Implemented just in case. */
 void midi_noteoff_callback(MidiDevice *device, uint8_t byte0, uint8_t byte1, uint8_t byte2)
 {
-	if (byte1 >= CLIP_BLOCK_INITIAL_NOTE && byte1 < CLIP_BLOCK_INITIAL_NOTE + CLIP_BLOCK_X * CLIP_BLOCK_Y)
+	if (byte1 >= CLIP_BLOCK_INITIAL_NOTE && byte1 < CLIP_BLOCK_INITIAL_NOTE + CLIP_BLOCK_SIZE)
 	{
 		indicators[byte1 - CLIP_BLOCK_INITIAL_NOTE] = 0;
 	}

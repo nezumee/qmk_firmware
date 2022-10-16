@@ -48,12 +48,12 @@ static bool midi_feedback_effect(effect_params_t* params)
 			{
 				uint16_t light;
 				uint16_t key = keymap_key_to_keycode(layer, (keypos_t){col,row});
-				if (key >= CLIP_BLOCK_INITIAL_KEY && key < CLIP_BLOCK_INITIAL_KEY + CLIP_BLOCK_X * CLIP_BLOCK_Y)
+				if (key >= CLIP_BLOCK_INITIAL_KEY && key < CLIP_BLOCK_INITIAL_KEY + CLIP_BLOCK_SIZE)
 				{
 					/* Key is mapped to a MIDI note with feedback*/
 					light = indicators[key - CLIP_BLOCK_INITIAL_KEY];
 				}
-				else if (key >= TRACK_ARM_INITIAL_KEY && key < TRACK_ARM_INITIAL_KEY + CLIP_BLOCK_X)
+/*				else if (key >= TRACK_ARM_INITIAL_KEY && key < TRACK_ARM_INITIAL_KEY + CLIP_BLOCK_X)
 				{
 					// TODO use skinning from Ableton instead of hardcoding?
 					// TODO constants for colors
@@ -63,14 +63,6 @@ static bool midi_feedback_effect(effect_params_t* params)
 				{
 					light = 118;	// stop track - gray
 				}
-				else if (KC_SPACE == key)
-				{
-					light = 21;	// play - bright green
-				}
-				else if (KC_DEL == key)
-				{
-					light = 5;	// delete - bright red
-				}
 				else if (MI_A_4 == key)
 				{
 					light = 6;	// overdub - red
@@ -78,6 +70,14 @@ static bool midi_feedback_effect(effect_params_t* params)
 				else if (key >= SCENE_INITIAL_KEY && key <= SCENE_INITIAL_KEY + CLIP_BLOCK_Y)
 				{
 					light = 22;	// scene play - green
+				}*/
+				else if (KC_SPACE == key)
+				{
+					light = 21;	// play - bright green
+				}
+				else if (KC_DEL == key)
+				{
+					light = 5;	// delete - bright red
 				}
 				else if ((key >= QK_DEF_LAYER && key <= QK_DEF_LAYER_MAX) ||
 					(key >= QK_ONE_SHOT_LAYER && key <= QK_ONE_SHOT_LAYER_MAX))
