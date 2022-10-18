@@ -17,7 +17,7 @@ for more options.
 
 #define TAPPING_FORCE_HOLD_PER_KEY
 
-#define COMBO_COUNT 32
+#define COMBO_COUNT 33
 #define STATIC_LAYERSET 7
 #define STRING_DELAY 20
 
