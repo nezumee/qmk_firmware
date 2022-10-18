@@ -26,6 +26,7 @@ const uint16_t PROGMEM cd2_combo[] = {KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM xcd_combo[] = {KC_X, KC_C, LT(6, KC_D), COMBO_END};
+const uint16_t PROGMEM xcd2_combo[] = {KC_X, KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM xcv_combo[] = {KC_X, KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM er_combo[] = {KC_E, KC_R, COMBO_END};
@@ -40,6 +41,7 @@ const uint16_t PROGMEM upright_combo[] = {KC_UP, KC_RGHT, COMBO_END};
 
 enum combo_events {
   XCD_BRACKETS,
+  XCD2_BRACKETS,
   XCV_BRACKETS,
   HCOMDOT_QUOTES,
   MCOMDOT_QUOTES,
@@ -47,6 +49,7 @@ enum combo_events {
 
 combo_t key_combos[COMBO_COUNT] = {
 	[XCD_BRACKETS] = COMBO_ACTION(xcd_combo),
+	[XCD2_BRACKETS] = COMBO_ACTION(xcd2_combo),
 	[XCV_BRACKETS] = COMBO_ACTION(xcv_combo),
 	[HCOMDOT_QUOTES] = COMBO_ACTION(hcomdot_combo),
 	[MCOMDOT_QUOTES] = COMBO_ACTION(mcomdot_combo),
@@ -84,6 +87,7 @@ combo_t key_combos[COMBO_COUNT] = {
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case XCD_BRACKETS:
+	case XCD2_BRACKETS:
     case XCV_BRACKETS:
       if (pressed) {
 		SEND_STRING_DELAY("()" SS_DOWN(X_LEFT) SS_UP(X_LEFT), STRING_DELAY);
