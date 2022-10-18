@@ -89,6 +89,17 @@ static bool midi_feedback_effect(effect_params_t* params)
 				{
 					light = 81;	// modtap layer and homerow switches - purple
 				}
+				else if (KC_CAPS == key)
+				{
+					if (host_keyboard_led_state().caps_lock)
+					{
+						light = 118;	// caps enabled: grey
+					}
+					else
+					{
+						light = 47;		// caps disabled: dark blue
+					}
+				}
 				else if (key > KC_TRNS)
 				{
 					light = 47;	// other keys - dark blue
