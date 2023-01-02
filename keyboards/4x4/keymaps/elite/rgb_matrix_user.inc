@@ -86,6 +86,8 @@ static my_color get_key_color(uint16_t key)
 		case KC_QUOT:
 		case KC_F5:
 		case KC_F6:
+		case KC_INS:
+		case KC_F12:
 			return DARK | GOLD;
 			
 		// FSD
@@ -107,6 +109,10 @@ static my_color get_key_color(uint16_t key)
 		case KC_ENT:
 		case KC_BSPC:
 		case KC_SPC:
+		case KC_LEFT:
+		case KC_RIGHT:
+		case KC_UP:
+		case KC_DOWN:
 			return WHITE;
 		
 		case KC_TRNS:
